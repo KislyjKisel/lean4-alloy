@@ -3,12 +3,16 @@ Copyright (c) 2023 Mac Malone. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Mac Malone
 -/
-import Alloy.C.ShimElab
-import Lean.Elab.Eval
+module
+
+public meta import Alloy.C.ShimElab
+public meta import Lean.Elab.Eval
 
 /-! # Lean ↔ C Translation
 Definitions for wrapping and unwrapping C data in Lean types.
 -/
+
+public meta section
 
 namespace Alloy.C
 open Lean Elab Syntax Command

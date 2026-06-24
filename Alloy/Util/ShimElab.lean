@@ -3,14 +3,20 @@ Copyright (c) 2023 Mac Malone. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Mac Malone
 -/
-import Alloy.Util.Shim
-import Alloy.Util.Extension
+module
+
+public meta import Alloy.Util.Syntax
+public meta import Lean.Elab.AuxDef
+public meta import Lean.Elab.Syntax
+
+public import Alloy.Util.Shim
+public import Alloy.Util.Extension
+
 import Alloy.Util.Command
-import Alloy.Util.Syntax
-import Lean.Elab.AuxDef
-import Lean.Elab.Syntax
 
 open Lean Elab Command Parser
+
+public section
 
 namespace Alloy
 

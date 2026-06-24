@@ -3,10 +3,18 @@ Copyright (c) 2022 Mac Malone. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Mac Malone
 -/
-import Alloy.Util.ShimElab
-import Alloy.C.Server.Worker
+module
+
+public meta import Alloy.Util.ShimElab
+public meta import Alloy.C.Server.Worker
+
+public import Alloy.Util.Server.Extra
+public import Alloy.Util.Command
+public import Alloy.C.Grammar
 
 open Lean Lsp Elab Command
+
+public meta section
 
 register_option Alloy.shimDiagnostics : Bool := {
   defValue := true

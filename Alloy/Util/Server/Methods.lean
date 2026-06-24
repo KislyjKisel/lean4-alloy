@@ -3,9 +3,13 @@ Copyright (c) 2022 Mac Malone. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Mac Malone
 -/
-import Alloy.Util.Server.Initialize
+module
+
+public import Alloy.Util.Server.Initialize
 
 open Lean Lsp
+
+public section
 
 namespace Alloy
 
@@ -44,6 +48,7 @@ structure TextEdit where
   deriving ToJson, FromJson
 
 /-- A completion edit can be `TextEdit | InsertReplaceEdit`. -/
+@[expose]
 def CompletionTextEdit := InsertReplaceEdit
 
 instance : ToJson CompletionTextEdit := inferInstanceAs (ToJson InsertReplaceEdit)

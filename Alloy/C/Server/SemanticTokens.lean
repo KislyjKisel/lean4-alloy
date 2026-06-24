@@ -3,11 +3,15 @@ Copyright (c) 2022 Mac Malone. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Mac Malone
 -/
-import Alloy.C.Shim
-import Alloy.C.Server.Worker
-import Alloy.Util.Server
+module
+
+public meta import Alloy.C.Server.Worker
+
+public import Alloy.Util.Server.Extra
 
 open Lean Server Lsp RequestM
+
+public meta section
 
 namespace Alloy.C
 

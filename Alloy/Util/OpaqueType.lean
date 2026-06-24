@@ -3,13 +3,17 @@ Copyright (c) 2023 Mac Malone. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Mac Malone
 -/
-import Alloy.Util.Binder
-import Lean.Elab.MutualDef
+module
+
+public meta import Alloy.Util.Binder
+public meta import Lean.Elab.MutualDef
 
 /-! # Opaque Types
 Defines an `opaque_type` command which is simplified syntactic sugar for
 defining a nonempty type with an opaque representation.
 -/
+
+public section
 
 namespace Alloy
 open Lean Elab Parser Command Meta

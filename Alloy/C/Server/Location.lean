@@ -3,14 +3,19 @@ Copyright (c) 2022 Mac Malone. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Mac Malone
 -/
-import Alloy.C.Shim
-import Alloy.C.Server.Worker
+module
+
+public meta import Alloy.C.Shim
+public meta import Alloy.C.Server.Worker
+public meta import Alloy.Util.Server.Extra
 
 open Lean Server Lsp RequestM JsonRpc
 
+public section
+
 namespace Alloy.C
 
-def handleLocation
+meta def handleLocation
   (p : Lsp.Position)
   (method : String) [LsCall method TextDocumentPositionParams α]
   (prev : RequestTask α)
@@ -34,7 +39,7 @@ def handleLocation
 
 /-! ## Completion Support -/
 
-def handleCompletion (p : CompletionParams)
+meta def handleCompletion (p : CompletionParams)
 (prev : RequestTask CompletionList) : RequestM (RequestTask CompletionList) := do
   let doc ← readDoc
   let text := doc.meta.text
@@ -69,7 +74,7 @@ def handleCompletion (p : CompletionParams)
 
 /-! ## Hover Support -/
 
-def handleHover (p : HoverParams)
+meta def handleHover (p : HoverParams)
 (prev : RequestTask (Option Hover)) : RequestM (RequestTask (Option Hover)) := do
   have : LsCall "textDocument/hover" TextDocumentPositionParams (Option Hover) := {}
   handleLocation p.position "textDocument/hover" prev fun shim shimHover? leanHover? => do
@@ -85,7 +90,7 @@ def handleHover (p : HoverParams)
 
 /-! ## Goto Support -/
 
-def handleGoto
+meta def handleGoto
 (method : String) [LsCall method TextDocumentPositionParams (Array LocationLink)]
 (p : TextDocumentPositionParams) (prev : RequestTask (Array LocationLink))
 : RequestM (RequestTask (Array LocationLink)) := do

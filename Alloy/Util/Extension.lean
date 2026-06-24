@@ -3,12 +3,18 @@ Copyright (c) 2022 Mac Malone. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Mac Malone
 -/
-import Lean.Environment
+module
+
+public import Lean.Environment
 
 open Lean
+
+public section
+
 namespace Alloy
 
 /-- Persistent environment extension for storing a single serializable value per module. -/
+@[expose]
 def ModuleEnvExtension (σ : Type) := PersistentEnvExtension σ σ σ
 
 def registerModuleEnvExtension [Inhabited σ] (mkInitial : IO σ)

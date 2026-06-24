@@ -3,10 +3,16 @@ Copyright (c) 2022 Mac Malone. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Mac Malone
 -/
-import Alloy.C.Shim
-import Lean.Server.Requests
+module
+
+public import Alloy.C.Shim
+public import Lean.Server.Requests
+
+import Alloy.Util.Shim
 
 open Lean Server JsonRpc RequestM
+
+public section
 
 namespace Alloy
 

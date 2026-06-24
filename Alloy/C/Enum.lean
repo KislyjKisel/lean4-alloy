@@ -3,9 +3,14 @@ Copyright (c) 2023 Mac Malone. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Mac Malone, Henrik Böving
 -/
+module
+
+public import Alloy.C.Translator
+public import Lean.Compiler.IR
+
 import Alloy.C.Syntax
-import Alloy.C.Translator
-import Lean.Compiler.NameMangling
+
+public meta section
 
 namespace Alloy.C
 open Lean Meta Elab Parser Command

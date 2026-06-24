@@ -3,12 +3,17 @@ Copyright (c) 2022 Mac Malone. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Mac Malone
 -/
-import Alloy.C.IR
-import Alloy.C.ShimElab
-import Alloy.Util.Syntax
-import Alloy.Util.Binder
-import Lean.Compiler.NameMangling
-import Lean.Linter.UnusedVariables
+module
+
+public meta import Alloy.C.IR
+public meta import Alloy.Util.Binder
+
+public import Alloy.C.ShimElab
+public import Lean.Compiler.NameMangling
+public import Lean.Linter.UnusedVariables
+public import Lean.Compiler.IR.CompilerM
+
+public meta section
 
 namespace Alloy.C
 open Lean Parser Elab Command

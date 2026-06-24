@@ -3,10 +3,13 @@ Copyright (c) 2022 Mac Malone. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Mac Malone
 -/
+module
+
+public import Alloy.C.Server.Clangd
+public import Alloy.Util.Server
+
 import Lean.Util.Path
 import Lean.Data.LOption
-import Alloy.C.Server.Clangd
-import Alloy.Util.Server
 
 /-!
 # Alloy's C Language Server Worker
@@ -22,6 +25,8 @@ command elaboration to provide diagnostics for C shim code.
 -/
 
 open System Lean Lsp
+
+public section
 
 namespace Alloy.C
 

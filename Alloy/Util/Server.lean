@@ -3,11 +3,16 @@ Copyright (c) 2022 Mac Malone. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Mac Malone
 -/
-import Lean.Server.Requests
-import Alloy.Util.Server.Worker
+module
+
+public import Lean.Server.Requests
+public import Alloy.Util.Server.Worker
+
 import Alloy.Util.Server.Extra
 
 open Lean Server Lsp
+
+public section
 
 namespace Alloy
 
@@ -51,7 +56,8 @@ def isNullUri (uri : DocumentUri) : Bool :=
     uri = "file:///dev/null"
 
 /-- Like `Lean.Server.chainLspRequestHandler`, but uses `LsCall`. -/
-@[macro_inline] def chainLspRequestHandler
+@[macro_inline, expose]
+def chainLspRequestHandler
   (method : String) [LsCall method α β] [FromJson α] [ToJson β]
   (handler : α → RequestTask β → RequestM (RequestTask β))
 : IO Unit :=

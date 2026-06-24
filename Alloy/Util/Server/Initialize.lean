@@ -3,10 +3,14 @@ Copyright (c) 2022 Mac Malone. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Mac Malone
 -/
-import Lean.Data.Lsp.InitShutdown
-import Alloy.Util.Server.Capabilities
+module
+
+public import Lean.Data.Lsp.InitShutdown
+public import Alloy.Util.Server.Capabilities
 
 open Lean Lsp
+
+public section
 
 namespace Alloy
 

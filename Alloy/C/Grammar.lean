@@ -3,8 +3,11 @@ Copyright (c) 2022 Mac Malone. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Mac Malone
 -/
-import Alloy.Util.Parser
-import Alloy.Util.Grammar
+module
+
+public meta import Alloy.Util.Parser
+
+public import Alloy.Util.Grammar
 
 /-!
 # The C Grammar
@@ -21,7 +24,9 @@ It uses Microsoft's [C Language Syntax Summary][1], the C11 standard's
 
 open Lean Parser
 
-register_option Alloy.C.optSemicolon : Bool := {
+public section
+
+meta register_option Alloy.C.optSemicolon : Bool := {
   defValue := true
   descr := "Should semicolons be optional in Alloy C code?"
 }
@@ -129,7 +134,7 @@ declare_syntax_cat cCmd (behavior := both)
 
 variable (pushMissingOnError : Bool) in
 /-- Adaption of `Lean.Parser.finishCommentBlock`. -/
-partial def finishCommentBlock (nesting : Nat) : ParserFn := fun c s =>
+meta partial def finishCommentBlock (nesting : Nat) : ParserFn := fun c s =>
   let i     := s.pos
   if h : c.atEnd i then eoi s
   else
@@ -154,7 +159,7 @@ partial def finishCommentBlock (nesting : Nat) : ParserFn := fun c s =>
 where
   eoi s := s.mkUnexpectedError (pushMissing := pushMissingOnError) "unterminated comment"
 
-def blockCommentBody :=
+meta def blockCommentBody :=
   raw (finishCommentBlock (pushMissingOnError := true) 1) (trailingWs := true)
 
 /-- A C line comment. -/
@@ -199,7 +204,7 @@ Can be an upper- or lower-case `l` or `ll` with a `u` prefix or suffix.
 
 [1]: https://en.cppreference.com/w/c/language/integer_constant
 -/
-def intSuffix :=
+meta def intSuffix :=
   identSatisfy ["integer suffix"] fun
   | .str .anonymous s =>
     let s := s.toLower
@@ -652,12 +657,12 @@ in polyglot syntax. This behavior can be disabled via
 For the shim, the elaborator will always convert this into a real semicolon,
 even if it has been elided in user code.
 -/
-def endSemi : Parser := leading_parser
+meta def endSemi : Parser := leading_parser
   withFn (p := optional (symbol ";")) fun p c s =>
     if optSemicolon.get c.options then p c s else symbolFn ";" c s
 
 /-- Ensure the previous syntax ended with a semicolon token. -/
-def checkSemi : Parser :=
+meta def checkSemi : Parser :=
   checkStackTop (tailSyntax · |>.isToken ";") "expected ';'"
 
 /-- An `init-declarator` of the C grammar. -/
@@ -954,8 +959,9 @@ syntax cExternDecl : cCmd
 -/
 
 /-- A `h-char-sequence` of the C grammar. -/
-@[run_parser_attribute_hooks] def angleHeaderName :=
-   raw (takeUntilFn fun c => c == '>')
+@[run_parser_attribute_hooks]
+meta def angleHeaderName :=
+  raw (takeUntilFn fun c => c == '>')
 
 syntax angleHeader := "<" angleHeaderName ">"
 

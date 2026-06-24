@@ -3,14 +3,16 @@ Copyright (c) 2022 Mac Malone. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Mac Malone
 -/
-import Alloy.C.Server.Location
-import Alloy.C.Server.SemanticTokens
+module
+
+meta import Alloy.C.Server.Location
+meta import Alloy.C.Server.SemanticTokens
 
 open Lean Server Lsp
 
 namespace Alloy.C
 
-initialize
+meta initialize
   chainLspRequestHandler "textDocument/hover" handleHover
   chainLspRequestHandler "textDocument/completion" handleCompletion
   chainStatelessLspRequestHandler "textDocument/semanticTokens/full" handleSemanticTokensFull

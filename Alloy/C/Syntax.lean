@@ -3,6 +3,10 @@ Copyright (c) 2022 Mac Malone. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Mac Malone
 -/
+module
+
+public import Lean.Hygiene
+
 import Alloy.C.Grammar
 
 /-!
@@ -12,6 +16,9 @@ Definitions for dealing with C-specific syntax.
 -/
 
 open Lean
+
+public section
+
 namespace Alloy.C
 
 /-!

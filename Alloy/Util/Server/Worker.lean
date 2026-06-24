@@ -3,13 +3,17 @@ Copyright (c) 2022 Mac Malone. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Mac Malone
 -/
-import Std.Sync.Mutex
-import Lean.Data.Lsp.Communication
-import Alloy.Util.Server.Methods
+module
+
+public import Std.Sync.Mutex
+public import Lean.Data.Lsp.Communication
+public import Alloy.Util.Server.Methods
 
 open Lean hiding Message
 open Lean.Lsp Lean.JsonRpc
 open IO (Promise)
+
+public section
 
 namespace Alloy
 

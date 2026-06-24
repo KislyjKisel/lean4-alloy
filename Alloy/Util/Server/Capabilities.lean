@@ -3,18 +3,26 @@ Copyright (c) 2022 Mac Malone. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Mac Malone
 -/
-import Lean.Data.Lsp.Capabilities
+module
+
+public import Lean.Data.Lsp.Capabilities
 
 open Lean Lsp
+
+public section
 
 namespace Alloy
 
 structure EmptyObject deriving ToJson, FromJson
 instance : EmptyCollection EmptyObject := ⟨.mk⟩
 
+@[expose]
 def Union := Sum
 
+@[expose]
 def Union.inl (a : α) : Union α β := Sum.inl a
+
+@[expose]
 def Union.inr (b : β) : Union α β := Sum.inr b
 
 instance : Coe α (Union α β) := ⟨.inl⟩
@@ -38,7 +46,7 @@ structure WorkDoneProgressOptions where
 deriving instance DecidableEq for SymbolKind
 
 instance : FromJson SymbolKind where
- fromJson? v := do
+  fromJson? v := do
     let i : Nat ← fromJson? v
     return SymbolKind.ofNat (i-1)
 
@@ -292,7 +300,7 @@ structure DocumentSymbolClientCapabilities where
   labelSupport? : Option Bool := none
   deriving ToJson, FromJson
 
-def CodeActionKind := Name
+abbrev CodeActionKind := Name
 
 namespace CodeActionKind
 
