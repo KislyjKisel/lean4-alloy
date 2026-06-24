@@ -76,7 +76,7 @@ structure ServerConfig where
 @[inline] def ServerConfig.setLogging (cfg : ServerConfig) (logging : ClangdLogging) : ServerConfig :=
   {cfg with logging}
 
-attribute [instance] Sum.inhabitedLeft in
+attribute [local instance] Sum.inhabitedLeft
 structure ClangdDocState where
   leanVer : Nat := 0
   shimEndPos : String.Pos.Raw := 0

@@ -68,7 +68,7 @@ def setExtern (name : Name) (sym : String) : CoreM Unit := do
   let env := externAttr.ext.modifyState (← getEnv) fun (names, map) =>
     (name :: names, map.insert name externData)
   setEnv env
-  addExtern name externData
+  compileDecls #[name]
 
 def elabExternImpl (exTk : Syntax) (sym? : Option StrLit) (id : Ident) (bvs : Array BinderSyntaxView)
 (type : Syntax) (body : CompStmt) : CommandElabM Unit := do
