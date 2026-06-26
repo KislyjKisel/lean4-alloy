@@ -53,6 +53,7 @@ declModifiers "opaque_type " declId binders (typeLvSpec)? : command
 
 elab_rules : command
 | `(opaqueType| $mods:declModifiers opaque_type $declId $bs* $[: Type $(lv??)?]?) => do
+  withExporting (isExporting := (← getScope).isPublic) do
   let modifiers ← elabModifiers ⟨mods⟩
   let {docString?, visibility, isProtected, attrs, ..} := modifiers
   let safety := if modifiers.isUnsafe then DefinitionSafety.unsafe else .safe
@@ -66,12 +67,13 @@ elab_rules : command
   let ntId := mkIdentFrom declId <| `_root_ ++ ntName
   let ntDefn := mkNode ``Parser.Command.declValSimple
     #[mkAtomFrom stx ":=", ← `(default_or_ofNonempty%)]
-  Term.elabMutualDef vars sc #[{
-    ref := stx, headerRef := stx, kind := .opaque,
-    modifiers := {isUnsafe := safety matches .unsafe},
-    declId := declId.raw.setArg 0 ntId, binders := mkNullNode bs,
-    type? := nt, value := ntDefn, docString? := none
-  }] {}
+  withOptions (·.setBool `linter.unusedVariables false) do
+    Term.elabMutualDef vars sc #[{
+      ref := stx, headerRef := stx, kind := .opaque,
+      modifiers := {isUnsafe := safety matches .unsafe, attrs := #[{ name := `expose }] },
+      declId := declId.raw.setArg 0 ntId, binders := mkNullNode bs,
+      type? := nt, value := ntDefn, docString? := none
+    }] {}
   let .opaqueInfo {type, levelParams, ..} ← getConstInfo ntName
     | throwError "expected opaque info for 'nonemptyType'"
   forallTelescope type fun as r => do
@@ -104,4 +106,5 @@ elab_rules : command
     hints := .abbrev
     safety
   }
+  setReducibilityStatus instName .instanceReducible
   addInstance instName .global (eval_prio default)
