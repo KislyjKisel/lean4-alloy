@@ -55,9 +55,9 @@ elab_rules : command
 | `(opaqueType| $mods:declModifiers opaque_type $declId $bs* $[: Type $(lv??)?]?) => do
   withExporting (isExporting := (← getScope).isPublic) do
   let modifiers ← elabModifiers ⟨mods⟩
-  let {docString?, visibility, isProtected, attrs, ..} := modifiers
+  let {visibility, isProtected, attrs, ..} := modifiers
   let safety := if modifiers.isUnsafe then DefinitionSafety.unsafe else .safe
-  let {declName, ..} ← liftTermElabM <| expandDeclId (← getCurrNamespace) (← getLevelNames) declId {docString?, visibility, isProtected}
+  let {declName, ..} ← liftTermElabM <| expandDeclId (← getCurrNamespace) (← getLevelNames) declId {visibility, isProtected}
   let sc ← Command.getScope
   runTermElabM fun vars => do
   let stx ← getRef
@@ -93,6 +93,7 @@ elab_rules : command
   withSaveInfoContext do
     Term.addTermInfo' declId (mkConst declName levels) (isBinder := true)
   Term.applyAttributes declName attrs
+  addDocString' declName (.node .none `binders bs.raw) (modifiers.docString?.map Prod.fst)
   let instName := declName.str "nonempty"
   let neValue ← mkLambdaFVars as <|
     mkApp (mkConst ``NonemptyType.nonempty [u]) ntValue
