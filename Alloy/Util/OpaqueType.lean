@@ -93,7 +93,7 @@ elab_rules : command
   withSaveInfoContext do
     Term.addTermInfo' declId (mkConst declName levels) (isBinder := true)
   Term.applyAttributes declName attrs
-  addDocString' declName (.node .none `binders bs.raw) (modifiers.docString?.map Prod.fst)
+  addDocString' declName (.node .none `binders bs.raw) modifiers.docString?
   let instName := declName.str "nonempty"
   let neValue ← mkLambdaFVars as <|
     mkApp (mkConst ``NonemptyType.nonempty [u]) ntValue
